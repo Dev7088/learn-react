@@ -28,7 +28,19 @@ function App() {
   const copyPasswordToClipbord = useCallback(() => {
     passwordRef.current?.select();
     passwordRef.current?.setSelectionRange(0, 101);
-    copybtnRef.current?.style.backgroundColor = 'green';
+
+    // Add green background to indicate it's copy btn is click
+    copybtnRef.current?.classList.remove("bg-blue-700", "hover:bg-blue-800");
+    copybtnRef.current?.classList.add("bg-green-700", "hover:bg-green-800");
+
+    setTimeout(() => {
+      copybtnRef.current?.classList.remove(
+        "bg-green-700",
+        "hover:bg-green-800"
+      );
+      copybtnRef.current?.classList.add("bg-blue-700", "hover:bg-blue-800");
+    }, 1000);
+
     window.navigator.clipboard.writeText(password);
   }, [password]);
 
@@ -51,7 +63,7 @@ function App() {
         <button
           ref={copybtnRef}
           onClick={copyPasswordToClipbord}
-          className="outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0"
+          className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 transition-colors duration-200"
         >
           copy
         </button>
